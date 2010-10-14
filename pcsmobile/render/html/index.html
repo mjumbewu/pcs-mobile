@@ -10,15 +10,15 @@
   
   <body>
   
-    <form id="login-screen" class="screen current" action="my_session.html" method="POST">
+    <form id="login-screen" class="screen current" action="my_session" method="POST">
       <div class="titlebar">
         <h1>PCS Anywhere</h1>
-        <a class="button" href="my_session" id="login-button">Log In</a>
+        <button type="submit" id="login-button">Log In</button>
       </div>
       
       <ul id="login-fields">
-        <li><input type="text" id="userid" placeholder="User ID" /></li>
-        <li><input type="password" id="password" placeholder="Password" /></li>
+        <li><input type="text" id="userid" name="user" placeholder="User ID" /></li>
+        <li><input type="password" id="password" name="password" placeholder="Password" /></li>
       </ul>
     </form>
     

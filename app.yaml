@@ -13,31 +13,31 @@ handlers:
   script: pcsmobile/handle/wsgi/index.py
   secure: always
 
-- url: /login.html
+- url: /login
   script: pcsmobile/handle/wsgi/index.py
   secure: always
 
-- url: /my_session.html
+- url: /my_session
   script: pcsmobile/handle/wsgi/my_session.py
   secure: optional
 
-- url: /my_reservations.html
+- url: /my_reservations
   script: pcsmobile/handle/wsgi/my_reservation.py
   secure: never
 
-- url: /vehicle_search.html
+- url: /vehicle_search
   script: pcsmobile/handle/wsgi/vehicle_search.py
   secure: never
 
-- url: /confirm_reservation.html
+- url: /confirm_reservation
   script: pcsmobile/handle/wsgi/confirm_reservation.py
   secure: never
 
-- url: /datetime_picker.html
+- url: /datetime_picker
   script: pcsmobile/handle/wsgi/datetime_picker.py
   secure: never
 
-- url: /location_picker.html
+- url: /location_picker
   script: pcsmobile/handle/wsgi/location_picker.py
   secure: never
 

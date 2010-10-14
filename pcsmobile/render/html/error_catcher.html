@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+{% if error %}
+    <title>PCS Anywhere - Error</title>
+{% else %}
+    <title>PCS Anywhere - {% block title %}{% endblock %}</title>
+{% endif %}
+    <!--link rel="stylesheet" href="/styles/pcs-basic-html.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable = no" /-->
+    <link href="styles/main.css" rel="stylesheet" type="text/css" charset="utf-8" />
+    <link href="styles/pcs/mobile.css" rel="stylesheet" type="text/css" charset="utf-8" />
+  </head>
+  
+  <body>
+{% if error %}
+    <div id="error-screen" class="current screen">
+      <div class="titlebar">
+        <h1>Error</h1>
+      </div>
+      
+      <div class="info">
+        <div class="error">
+          <span class="code">{{ error.code }}</span>
+          <span class="msg">{{ error.msg }}</span>
+          <p class="detail" style="text-align: left;">{{ error.detail|linebreaksbr }}</p>
+        </div>
+        <p>Please go back and try again.</p>
+      </div>
+    </div>
+{% else %}
+    {% block content %}{% endblock %}
+{% endif %}
+  </body>
+</html>

@@ -1,0 +1,16 @@
+{% extends "error_catcher.html" %}
+
+{% block title %}Home{% endblock %}
+{% block content %}
+    <div id="home-screen" class="current screen">
+      <div class="titlebar">
+        <h1>{{ session.name }}</h1>
+      </div>
+      
+      <ul class="rounded">
+        <li><a id="new-reservation-link" href="new_reservation">Make a Reservation</a></li>
+        <li><a id="my-reservations-link" href="my_reservations">See My Reservations</a></li>
+      </ul>
+    </div>
+{% endblock %}
+

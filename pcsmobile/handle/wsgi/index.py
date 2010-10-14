@@ -19,7 +19,7 @@ class IndexHandler (webapp.RequestHandler):
 
 
 application = webapp.WSGIApplication(
-        [('/login.html', IndexHandler),
+        [('/login', IndexHandler),
          ('/index.html', IndexHandler)],
         debug=True)
 
