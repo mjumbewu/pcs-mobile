@@ -10,31 +10,31 @@ handlers:
   script: gaeunit.py
 
 - url: /login.html
-  script: pcs/handle/wsgi/login.py
+  script: pcsmobile/handle/wsgi/login.py
   secure: always
 
 - url: /my_session.html
-  script: pcs/handle/wsgi/my_session.py
+  script: pcsmobile/handle/wsgi/my_session.py
   secure: optional
 
 - url: /my_reservations.html
-  script: pcs/handle/wsgi/my_reservation.py
+  script: pcsmobile/handle/wsgi/my_reservation.py
   secure: never
 
 - url: /vehicle_search.html
-  script: pcs/handle/wsgi/vehicle_search.py
+  script: pcsmobile/handle/wsgi/vehicle_search.py
   secure: never
 
 - url: /confirm_reservation.html
-  script: pcs/handle/wsgi/confirm_reservation.py
+  script: pcsmobile/handle/wsgi/confirm_reservation.py
   secure: never
 
 - url: /datetime_picker.html
-  script: pcs/handle/wsgi/datetime_picker.py
+  script: pcsmobile/handle/wsgi/datetime_picker.py
   secure: never
 
 - url: /location_picker.html
-  script: pcs/handle/wsgi/location_picker.py
+  script: pcsmobile/handle/wsgi/location_picker.py
   secure: never
 
 - url: /styles
