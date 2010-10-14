@@ -9,8 +9,12 @@ handlers:
   login: admin
   script: gaeunit.py
 
+- url: /index.html
+  script: pcsmobile/handle/wsgi/index.py
+  secure: always
+
 - url: /login.html
-  script: pcsmobile/handle/wsgi/login.py
+  script: pcsmobile/handle/wsgi/index.py
   secure: always
 
 - url: /my_session.html
