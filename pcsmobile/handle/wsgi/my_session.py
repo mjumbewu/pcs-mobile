@@ -1,66 +1,34 @@
-import httplib
-import urllib
-import Cookie as cookielib
-import HTMLParser as htmlparserlib
-import os
-
-from google.appengine.ext import webapp
-from google.appengine.ext.webapp import template
-from google.appengine.ext.webapp.util import run_wsgi_app
-
+from pcsmobile.handle.wsgi._base import _BaseHandler
 from util.constants import Constants
 from util.fetch import Fetcher
+from util.render import Renderer
 
-class MySessionHandler (webapp.RequestHandler):
-    def __init__(self, constants = Constants(), fetcher = Fetcher()):
+class MySessionHandler (_BaseHandler):
+    def __init__(self, constants = Constants(), fetcher = Fetcher(), renderer = Renderer()):
         super(MySessionHandler, self).__init__()
-        
         self.__const = constants
         self.__fetch = fetcher.fetch_json
+        self.__render = renderer.render
     
-    def __get_param(self, param):
-        value = self.request.get(param)
-        return value
+    def _get_params(self):
+        params = {}
+        for param in self.request.arguments():
+            params[param] = self.request.get(param)
+        return params
     
-    def __get_userid(self):
-        userid = self.__get_param('user')
-        return userid
-    
-    def __get_password(self):
-        password = self.__get_param('password')
-        return password
-    
-    def post(self):
-        userid = self.__get_userid()
-        password = self.__get_password()
-        
+    def _get_rendered_response(self):
         values, headers = self.__fetch(
             ''.join(['http://', self.__const.API_HOST, '/session.json']),
             'POST', 
-            {
-              'user' : userid,
-              'password' : password
-            }
+            self._get_params(),
+            self._get_headers()
         );
         
-#        self.response.out.write(repr(values));
-#        self.response.out.write(userid + ' ');
-#        self.response.out.write(password + ' ');
-#        self.response.out.write(os.path.join(self.__const.HTML_DIR, 'my_session.html'))
+        content = self.__render('my_session.html', values)
         
-        path = os.path.join(self.__const.HTML_DIR, 'my_session.html')
-        response_body = template.render(path, values)
-        
-        self.response.out.write(response_body);
-        self.response.set_status(200);
+        return content, headers
+    
+    def post(self):
+        self._handle()
 
 
-application = webapp.WSGIApplication(
-        [('/my_session', MySessionHandler)],
-        debug=True)
-
-def main():
-    run_wsgi_app(application)
-
-if __name__ == '__main__':
-    main()
