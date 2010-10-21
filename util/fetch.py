@@ -20,7 +20,7 @@ class Fetcher (object):
         query = urllib.urlencode(params)
         if method == urlfetch.GET:
             connector = '&' if '?' in url else '?'
-            url = connector.join(url, query)
+            url = connector.join([url, query])
             query = ''
         
         result = urlfetch.fetch(
@@ -35,5 +35,8 @@ class Fetcher (object):
     def fetch_json(self, url, method='GET', params={}, headers={}):
         content, head = self.fetch(url, method, params, headers)
         
-        data = json.loads(content)
+        try:
+            data = json.loads(content)
+        except ValueError, ve:
+            raise ValueError('%s from %r' % (ve.message, content))
         return (data, head)
