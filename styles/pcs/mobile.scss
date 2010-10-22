@@ -603,3 +603,16 @@ ul.metal li.arrow a small {
 }
 /* @end */
 
+
+ul.reservations {
+  li {
+    span:first-child {
+      font-size: 16px;
+    }
+    
+    span.reservation-time, span.reservation-price {
+      display:block;
+      font-size: 12px;
+    }
+  }
+}
