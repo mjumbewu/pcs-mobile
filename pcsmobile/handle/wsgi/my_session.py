@@ -19,7 +19,7 @@ class MySessionHandler (_BaseHandler):
     def _get_rendered_response(self):
         values, headers = self.__fetch(
             ''.join(['http://', self.__const.API_HOST, '/session.json']),
-            'POST', 
+            self.__method, 
             self._get_params(),
             self._get_headers()
         );
@@ -28,7 +28,12 @@ class MySessionHandler (_BaseHandler):
         
         return content, headers
     
+    def get(self):
+        self.__method = 'GET'
+        self._handle()
+    
     def post(self):
+        self.__method = 'POST'
         self._handle()
 
 
