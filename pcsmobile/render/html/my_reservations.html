@@ -16,7 +16,7 @@
             <option value="" 
               {% if not selected_period %}
                 selected="selected"
-              {% endif %}>Current</option>
+              {% endif %}>Now & Later</option>
             {% for period in periods %}
             <option value="{{ period|date:"Y-m" }}"
               {% ifequal selected_period.month period.month %}
@@ -37,8 +37,8 @@
           
           {% ifequal reservation.status 0 %}
             <form method="GET" action="/reservations/{{ reservation.id }}/editor.html">
-              <input type="hidden" name="start_time" value="{{ reservation.start_stamp }}" />
-              <input type="hidden" name="end_time" value="{{ reservation.end_stamp }}" />
+              <input type="hidden" name="start_time" value="{{ reservation.start_time }}" />
+              <input type="hidden" name="end_time" value="{{ reservation.end_time }}" />
               <input type="hidden" name="status" value="{{ reservation.status }}" />
               <input type="hidden" name="confirmid" value="{{ reservation.confirmid }}" />
               <input type="submit" value="Edit Reservation" />
@@ -47,15 +47,15 @@
           
           {% ifequal reservation.status 1 %}
             <form method="GET" action="/reservations/current/{{ reservation.confirmid }}/editor.html">
-              <input type="hidden" name="start_time" value="{{ reservation.start_stamp }}" />
-              <input type="hidden" name="end_time" value="{{ reservation.end_stamp }}" />
+              <input type="hidden" name="start_time" value="{{ reservation.start_time }}" />
+              <input type="hidden" name="end_time" value="{{ reservation.end_time }}" />
               <input type="hidden" name="status" value="{{ reservation.status }}" />
               <input type="hidden" name="confirmid" value="{{ reservation.confirmid }}" />
               <input type="submit" value="Edit Reservation" />
             </form>
             <form method="GET" action="/reservations/{{ reservation.id }}/canceller.html">
-              <input type="hidden" name="start_time" value="{{ reservation.start_stamp }}" />
-              <input type="hidden" name="end_time" value="{{ reservation.end_stamp }}" />
+              <input type="hidden" name="start_time" value="{{ reservation.start_time }}" />
+              <input type="hidden" name="end_time" value="{{ reservation.end_time }}" />
               <input type="hidden" name="status" value="{{ reservation.status }}" />
               <input type="hidden" name="confirmid" value="{{ reservation.confirmid }}" />
               <input type="submit" value="Cancel Reservation" />

@@ -42,12 +42,29 @@ class MyReservationsHandler (_BaseHandler):
         values['periods'] = periods
         values['selected_period'] = selected_period
         
+        STATUS_CURRENT  = 0
+        STATUS_UPCOMING = 1
+        STATUS_PAST     = 2
+        
         res_list = values.get('reservation_list', None)
         if res_list:
             reservations = res_list['reservations']
             for reservation in reservations:
-                reservation['start_time'] = from_isostring(reservation['start_time'])
-                reservation['end_time'] = from_isostring(reservation['end_time'])
+                now = current_time()
+                start_time = from_isostring(reservation['start_time'])
+                end_time = from_isostring(reservation['end_time'])
+                
+                reservation['start_time'] = start_time
+                reservation['end_time'] = end_time
+                if start_time > now:
+                    reservation['status'] = STATUS_UPCOMING
+                elif end_time > now:
+                    reservation['status'] = STATUS_CURRENT
+                else:
+                    reservation['status'] = STATUS_PAST
+            
+            if period_str == '':
+                reservations.sort(key=lambda r: r['status'])
         
         content = self.__render('my_reservations.html', values)
         
