@@ -24,7 +24,7 @@ class MyReservationsHandler (_BaseHandler):
             ''.join(['http://', self.__const.API_HOST, '/reservations.json']),
             'GET', 
             self._get_params(),
-            self._get_headers()
+            self._package_cookies()
         );
         
         period_str = self._get_param('period')

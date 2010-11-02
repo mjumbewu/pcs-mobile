@@ -9,7 +9,17 @@ handlers:
   login: admin
   script: gaeunit.py
 
+- url: /styles
+  static_dir: styles
+
+- url: /scripts
+  static_dir: scripts
+
 - url: /index.html
+  script: pcsmobile/handle/wsgi/router.py
+  secure: always
+
+- url: /
   script: pcsmobile/handle/wsgi/router.py
   secure: always
 
@@ -25,25 +35,23 @@ handlers:
   script: pcsmobile/handle/wsgi/router.py
   secure: never
 
-- url: /vehicle_search
+- url: /choose_vehicle
+  script: pcsmobile/handle/wsgi/router.py
+  secure: never
+
+- url: /choose_location
+  script: pcsmobile/handle/wsgi/router.py
+  secure: never
+
+- url: /choose_datetime
+  script: pcsmobile/handle/wsgi/router.py
+  secure: never
+
+- url: /new_reservation
   script: pcsmobile/handle/wsgi/router.py
   secure: never
 
 - url: /confirm_reservation
   script: pcsmobile/handle/wsgi/router.py
   secure: never
-
-- url: /datetime_picker
-  script: pcsmobile/handle/wsgi/router.py
-  secure: never
-
-- url: /location_picker
-  script: pcsmobile/handle/wsgi/router.py
-  secure: never
-
-- url: /styles
-  static_dir: styles
-
-- url: /scripts
-  static_dir: scripts
 

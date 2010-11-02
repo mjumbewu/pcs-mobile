@@ -1,0 +1,83 @@
+{% extends "error_catcher.html" %}
+
+{% block title %}Choose a Vehicle{% endblock %}
+{% block content %}
+    <section id="new-reservation-screen" class="screen">
+      <div class="titlebar">
+        <a class="back" href="my_session">Home</a>
+        <h1>Choose a Vehicle</h1>
+      </div>
+      
+      <ul class="edgetoedge">
+        <li>Near <a class="location" href="choose_location?{{ choose_location_query }}">{{ location_availability.location.name }}</a></li>
+        <li>From <a class="start time" href="choose_datetime?{{ choose_start_time_query }}">{{ location_availability.start_time|date:"g:iA, D M d, Y" }}</a></li>
+        <li>Until <a class="end time" href="choose_datetime?{{ choose_end_time_query }}">{{ location_availability.end_time|date:"g:iA, D M d, Y" }}</a></li>
+      </ul>
+      
+      {% if alert %}
+      <p class="info">Note: {{ alert }}</p>
+      {% endif %}
+      
+      <ul class="hidden">
+      {% for vehicle_availability in location_availability.vehicle_availabilities %}
+      {% ifchanged vehicle_availability.vehicle.pod.name %}
+      </ul>
+      
+      <h2>{{ vehicle_availability.vehicle.pod.name }}</h2>
+      <ul class="rounded">
+      {% endifchanged %}
+        <li>
+          <form action="new_reservation" method="GET">
+          
+            {% ifequal vehicle_availability.availability "full" %}
+            <input type="hidden" name="start_time" value="{{ location_availability.start_time|date:"Y-m-d\TH:i" }}" />
+            <input type="hidden" name="end_time" value="{{ location_availability.end_time|date:"Y-m-d\TH:i" }}" />
+            <input type="hidden" name="vehicle" value="{{ vehicle_availability.vehicle.id }}" />
+            <button type="submit">
+              <span class="vehicle-name">
+                {{ vehicle_availability.vehicle.model.name }}</span>
+            </button>
+            {% endifequal %}
+            
+            {% ifequal vehicle_availability.availability "part" %}
+            {% if vehicle_availability.earliest %}
+            <input type="hidden" name="start_time" value="{{ vehicle_availability.earliest|date:"Y-m-d\TH:i" }}" />
+            {% else %}
+            <input type="hidden" name="start_time" value="{{ location_availability.start_time|date:"Y-m-d\TH:i" }}" />
+            {% endif %}
+            {% if vehicle_availability.latest %}
+            <input type="hidden" name="end_time" value="{{ vehicle_availability.latest|date:"Y-m-d\TH:i" }}" />
+            {% else %}
+            <input type="hidden" name="end_time" value="{{ location_availability.end_time|date:"Y-m-d\TH:i" }}" />
+            {% endif %}
+            <input type="hidden" name="vehicle" value="{{ vehicle_availability.vehicle.id }}" />
+            <button type="submit">
+              <span class="vehicle-name">
+                {{ vehicle_availability.vehicle.model.name }}</span>
+              <span class="availability">
+                available
+                {% if vehicle_availability.earliest %}
+                  from {{ vehicle_availability.earliest|time }}, {{ vehicle_availability.earliest|date }}
+                {% endif %}
+                {% if vehicle_availability.latest %}
+                  until {{ vehicle_availability.latest|time }}, {{ vehicle_availability.latest|date }}
+                {% endif %}
+              </span>
+            </button>
+            {% endifequal %}
+            
+            {% ifequal vehicle_availability.availability "none" %}
+            <button type="button" disabled="disabled">
+              <span class="vehicle-name">
+                {{ vehicle_availability.vehicle.model.name }}</span>
+              </span>
+            </button>
+            {% endifequal %}
+            
+          </form>
+        </li>
+      {% endfor %}
+      </ul>
+    </section>
+{% endblock %}
+

@@ -1,0 +1,23 @@
+{% extends "error_catcher.html" %}
+
+{% block title %}Reservations{% endblock %}
+{% block content %}
+    <section id="cancel-reservation-screen" class="current screen">
+      <div class="titlebar">
+        <a class="back" href="my_reservations">Back</a>
+        <h1>Cancel Reservation</h1>
+      </div>
+      
+      <p class="info">Are you sure you want to cancel your reservation for a {{
+        model_name }} at {{ pod_name }} from {{ start_time|time }}, {{
+        start_time|date }} until {{ end_time|time }}, {{ end_time|date }}?</p>
+      <form action="confirm_cancel">
+        <input type="hidden" name="reservation" value="{{ reservation_id }}" />
+        <input type="hidden" name="vehicle" value="{{ vehicle_id }}" />
+        <input type="hidden" name="start_time" value="{{ start_time }}" />
+        <input type="hidden" name="end_time" value="{{ end_time }}" />
+        <button type="submit">Yes, Cancel!</button>
+      </form>
+    </section>
+{% endblock %}
+

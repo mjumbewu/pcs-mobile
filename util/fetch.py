@@ -25,8 +25,8 @@ class Fetcher (object):
         
         result = urlfetch.fetch(
             url=url,
-            method=method,
             payload=query,
+            method=method,
             headers=headers,
             deadline=10);
         

@@ -1,15 +1,24 @@
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 
+from pcsmobile.handle.wsgi.cancel_reservation import CancelReservationHandler
+from pcsmobile.handle.wsgi.choose_datetime import ChooseDateTimeHandler
+from pcsmobile.handle.wsgi.choose_location import ChooseLocationHandler
+from pcsmobile.handle.wsgi.choose_vehicle import ChooseVehicleHandler
 from pcsmobile.handle.wsgi.index import IndexHandler
-from pcsmobile.handle.wsgi.my_session import MySessionHandler
 from pcsmobile.handle.wsgi.my_reservations import MyReservationsHandler
+from pcsmobile.handle.wsgi.my_session import MySessionHandler
 
 application = webapp.WSGIApplication(
-        [('/my_reservations', MyReservationsHandler),
-         ('/my_session', MySessionHandler),
+        [('/', IndexHandler),
+         ('/cancel_reservation', CancelReservationHandler),
+         ('/choose_datetime', ChooseDateTimeHandler),
+         ('/choose_location', ChooseLocationHandler),
+         ('/choose_vehicle', ChooseVehicleHandler),
+         ('/index.html', IndexHandler),
          ('/login', IndexHandler),
-         ('/index.html', IndexHandler)],
+         ('/my_reservations', MyReservationsHandler),
+         ('/my_session', MySessionHandler)],
         debug=True)
 
 def main():

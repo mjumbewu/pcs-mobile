@@ -1,0 +1,25 @@
+{% extends "error_catcher.html" %}
+
+{% block title %}Locations{% endblock %}
+{% block content %}
+    <form id="choose-location-screen" class="screen"
+      method="GET" action="{{ return_url }}">
+      <div class="titlebar">
+        <a class="back" href="{{ return_url }}">Cancel</a>
+        <h1>Locations</h1>
+        <button type="submit">Save</button>
+      </div>
+      
+      {% for nv in reflect_params %}
+      <input type="hidden" name="{{ nv|first }}" value="{{ nv|slice:"1:"|first }}" />
+      {% endfor %}
+      
+      <ul class="rounded">
+        {% for location in locations %}
+        <li><input type="radio" name="{{ return_param }}" value="{{ location.id }}" id="location_{{ location.id }}" {% ifequal current_value location.id %}checked="checked"{% endifequal %} />
+          <label for="location_{{ location.id }}">{{ location.name }}</label></li>
+        {% endfor %}
+      </ul>
+    </form>
+{% endblock %}
+

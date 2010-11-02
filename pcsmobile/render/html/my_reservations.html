@@ -2,7 +2,7 @@
 
 {% block title %}Reservations{% endblock %}
 {% block content %}
-    <form id="my-reservations-screen" class="current screen"
+    <form id="my-reservations-screen" class="screen"
           action="my_reservations" method="GET">
       <div class="titlebar">
         <a class="back" href="my_session">Home</a>
@@ -53,7 +53,8 @@
               <input type="hidden" name="confirmid" value="{{ reservation.confirmid }}" />
               <input type="submit" value="Edit Reservation" />
             </form>
-            <form method="GET" action="/reservations/{{ reservation.id }}/canceller.html">
+            <form method="GET" action="/cancel_reservation">
+              <input type="hidden" name="reservation" value="{{ reservation.id }}" />
               <input type="hidden" name="start_time" value="{{ reservation.start_time }}" />
               <input type="hidden" name="end_time" value="{{ reservation.end_time }}" />
               <input type="hidden" name="status" value="{{ reservation.status }}" />
