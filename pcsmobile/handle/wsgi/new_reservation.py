@@ -114,6 +114,7 @@ class NewReservationHandler (_BaseTimeHandler):
                 vehid, vehmodel, vehpod, start_iso, end_iso)
         
         values = vehicle_availability_json
+        values['return_url'] = self._get_param('return_url')
 #        if not self._is_error(vehicle_availability_json):
 #            values.update(
 #                self._build_chooser_queries(vehicle_availability_json))
