@@ -2,16 +2,16 @@
 
 {% block title %}Choose a Vehicle{% endblock %}
 {% block content %}
-    <section id="new-reservation-screen" class="screen">
+    <section id="choose-vehicle-screen" class="screen">
       <div class="titlebar">
         <a class="back" href="my_session">Home</a>
         <h1>Choose a Vehicle</h1>
       </div>
       
-      <ul class="edgetoedge">
-        <li>Near <a class="location" href="choose_location?{{ choose_location_query }}">{{ location_availability.location.name }}</a></li>
-        <li>From <a class="start time" href="choose_datetime?{{ choose_start_time_query }}">{{ location_availability.start_time|date:"g:iA, D M d, Y" }}</a></li>
-        <li>Until <a class="end time" href="choose_datetime?{{ choose_end_time_query }}">{{ location_availability.end_time|date:"g:iA, D M d, Y" }}</a></li>
+      <ul class="edgetoedge screenparams">
+        <li class="labeledfield"><label>Near</label> <a class="location" href="choose_location?{{ choose_location_query }}">{{ location_availability.location.name }}</a></li>
+        <li class="labeledfield"><label>From</label> <a class="start time" href="choose_datetime?{{ choose_start_time_query }}">{{ location_availability.start_time|date:"g:iA, D M d, Y" }}</a></li>
+        <li class="labeledfield"><label>Until</label> <a class="end time" href="choose_datetime?{{ choose_end_time_query }}">{{ location_availability.end_time|date:"g:iA, D M d, Y" }}</a></li>
       </ul>
       
       {% if alert %}
@@ -28,11 +28,13 @@
       {% endifchanged %}
         <li>
           <form action="new_reservation" method="GET">
+            
+            <input type="hidden" name="return_url" value="{{ reflect_url }}" />
+            <input type="hidden" name="vehicle" value="{{ vehicle_availability.vehicle.id }}" />
           
             {% ifequal vehicle_availability.availability "full" %}
             <input type="hidden" name="start_time" value="{{ location_availability.start_time|date:"Y-m-d\TH:i" }}" />
             <input type="hidden" name="end_time" value="{{ location_availability.end_time|date:"Y-m-d\TH:i" }}" />
-            <input type="hidden" name="vehicle" value="{{ vehicle_availability.vehicle.id }}" />
             <button type="submit">
               <span class="vehicle-name">
                 {{ vehicle_availability.vehicle.model.name }}</span>
@@ -50,7 +52,6 @@
             {% else %}
             <input type="hidden" name="end_time" value="{{ location_availability.end_time|date:"Y-m-d\TH:i" }}" />
             {% endif %}
-            <input type="hidden" name="vehicle" value="{{ vehicle_availability.vehicle.id }}" />
             <button type="submit">
               <span class="vehicle-name">
                 {{ vehicle_availability.vehicle.model.name }}</span>

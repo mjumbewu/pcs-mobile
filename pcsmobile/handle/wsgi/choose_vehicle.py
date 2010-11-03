@@ -123,11 +123,12 @@ class ChooseVehicleHandler (_BaseHandler):
             self._build_time_param('end_time') or \
             None
         
+        # Only send start and end time if they are not None.  If we leave them 
+        # out, the server will just use the default time.
         params = {}
         if start_iso: params['start_time'] = start_iso
         if end_iso: params['end_time'] = end_iso
         
-        # fetch data from api
         location_availability_json, headers = self.__fetch(
             ''.join(['http://', self.__const.API_HOST, '/locations/', locid, '/availability.json']),
             'GET', 
@@ -143,16 +144,9 @@ class ChooseVehicleHandler (_BaseHandler):
         if not self._is_error(location_availability_json):
             values.update(
                 self._build_chooser_queries(location_availability_json))
-    
-        # render the html contents
-        content = self.__render('choose_vehicle.html', values)
+        values['reflect_url'] = self._construct_reflect_path()
         
-        # save the api parameters
-#        cookies = {}
-#        if start_iso: cookies['choose_vehicle_start_time'] = start_iso
-#        if end_iso: cookies['choose_vehicle_end_time'] = end_iso
-#        cookies['choose_vehicle_location'] = locid
-#        self._set_response_cookies(cookies)
+        content = self.__render('choose_vehicle.html', values)
         
         return content, headers
     

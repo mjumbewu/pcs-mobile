@@ -7,6 +7,7 @@ from pcsmobile.handle.wsgi.choose_location import ChooseLocationHandler
 from pcsmobile.handle.wsgi.choose_vehicle import ChooseVehicleHandler
 from pcsmobile.handle.wsgi.index import IndexHandler
 from pcsmobile.handle.wsgi.my_reservations import MyReservationsHandler
+from pcsmobile.handle.wsgi.new_reservation import NewReservationHandler
 from pcsmobile.handle.wsgi.my_session import MySessionHandler
 
 application = webapp.WSGIApplication(
@@ -18,7 +19,8 @@ application = webapp.WSGIApplication(
          ('/index.html', IndexHandler),
          ('/login', IndexHandler),
          ('/my_reservations', MyReservationsHandler),
-         ('/my_session', MySessionHandler)],
+         ('/my_session', MySessionHandler),
+         ('/new_reservation', NewReservationHandler)],
         debug=True)
 
 def main():

@@ -181,8 +181,7 @@ def to_timestamp(dt):
     return int(stamp)
 
 def to_isostring(dt):
-    # Trim off the time zone, and the seconds
-    return dt.isoformat()[:-9]
+    return dt.strftime('%Y-%m-%dT%H:%M')
 
 def to_pcs_date_time(dt):
     date_string = "%02d/%02d/%02d" % (dt.month, dt.day, dt.year%100)

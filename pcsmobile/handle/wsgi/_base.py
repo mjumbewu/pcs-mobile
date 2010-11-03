@@ -53,12 +53,17 @@ class _BaseHandler (webapp.RequestHandler):
         self.response.out.write(content);
         self.response.set_status(200);
     
+    def _construct_reflect_path(self):
+        """Create a return path that you can pass to other screens."""
+        reflect_path = '?'.join([self.request.path, self.request.query_string])
+        return reflect_path
+    
     def _construct_chooser_query(self, return_arg, current_value=None, reflect_params = {}):
         """Create a query string for sending to a chooser (e.g., the location
         or datetime chooser)."""
         import urllib
         
-        reflect_path = self.request.path
+        reflect_path = self._construct_reflect_path()
         #reflect_query = urllib.urlencode(reflect_params)
         query = {
             'current_value' : current_value,

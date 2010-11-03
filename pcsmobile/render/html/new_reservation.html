@@ -1,0 +1,18 @@
+{% extends "error_catcher.html" %}
+
+{% block title %}Create Reservation{% endblock %}
+{% block content %}
+    <form id="new-reservation-screen" class="screen">
+      <div class="titlebar">
+        <a class="back" href="{{ return_url }}">Cancel</a>
+        <h1>Reserve</h1>
+      </div>
+      
+      <p class="info">Do you want to reserve a {{ vehicle_availability.vehicle.model.name }} at {{ vehicle_availability.vehicle.pod.name }} from {{ vehicle_availability.start_time|date:"g:iA, D M d, Y" }} until {{ vehicle_availability.end_time|date:"g:iA, D M d, Y" }} for a total of ${{ vehicle_availability.price.total_amount }}?</p>
+      
+      <ul>
+        <li><button type="submit">Yes, Reserve!</button</li>
+      </ul>
+    </form>
+{% endblock %}
+

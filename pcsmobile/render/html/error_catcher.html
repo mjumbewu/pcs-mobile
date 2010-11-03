@@ -7,6 +7,8 @@
 {% else %}
     <title>PCS Anywhere - {% block title %}{% endblock %}</title>
 {% endif %}
+    <link rel="stylesheet" href="/styles/simple.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable = no" />
     <!--link rel="stylesheet" href="/styles/pcs-basic-html.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable = no" /-->
     <!--link href="styles/main.css" rel="stylesheet" type="text/css" charset="utf-8" />
@@ -26,7 +28,7 @@
           <!--span class="code">{{ error.code }}</span>
           <p class="detail" style="text-align: left;">{{ error.detail|linebreaksbr }}</p-->
         </div>
-        <p>Please go back and try again.</p>
+        <p>Please <a href="/">log in</a> and try again.</p>
       </div>
     </div>
 {% else %}
