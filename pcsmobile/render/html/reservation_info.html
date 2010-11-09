@@ -1,0 +1,36 @@
+{% extends "error_catcher.html" %}
+
+{% block title %}Create Reservation{% endblock %}
+{% block content %}
+    <section id="reservation-info-screen" class="screen">
+      <div class="titlebar">
+        <a class="back" href="my_session">Home</a>
+        <h1>Your Reservation</h1>
+      </div>
+      
+      <h2>You have reserved...</h2>
+      <ul>
+        <li>
+          <label>Vehicle:</label>
+          <span>{{ reservation.vehicle.model.name }}</span>
+        </li>
+        <li>
+          <label>Pod:</label>
+          <span>{{ reservation.vehicle.pod.name }}</span>
+        </li>
+        <li>
+          <label>Starting:</label>
+          <span>{{ reservation.start_time|date:"g:iA, D M d, Y" }}</span>
+        </li>
+        <li>
+          <label>Ending:</label>
+          <span>{{ reservation.end_time|date:"g:iA, D M d, Y" }}</span>
+        </li>
+        <li>
+          <label>Total price:</label>
+          <span>${{ reservation.price.total_amount }}?</span>
+        </li>
+      </ul>
+    </section>
+{% endblock %}
+

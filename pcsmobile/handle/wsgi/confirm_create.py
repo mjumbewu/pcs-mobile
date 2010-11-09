@@ -7,9 +7,10 @@ from util.TimeZone import current_time
 from util.TimeZone import from_isostring
 from util.TimeZone import to_isostring
 
-class CancelReservationHandler (_BaseHandler):
+class ConfirmReservationHandler (_BaseHandler):
+    
     def __init__(self, constants = Constants(), fetcher = Fetcher(), renderer = Renderer()):
-        super(CancelReservationHandler, self).__init__()
+        super(ConfirmReservationHandler, self).__init__()
         self.__const = constants
         self.__fetch = fetcher.fetch_json
         self.__render = renderer.render
@@ -26,36 +27,46 @@ class CancelReservationHandler (_BaseHandler):
             else:
                 return json_data
         
-        res = json_data['reservation']
+        conf = json_data['confirmation']
         
         # convert all iso to datetime
-        res_start = res['start_time']
-        res_end   = res['end_time']
-        res['start_time'] = from_isostring(res_start)
-        res['end_time']   = from_isostring(res_end)
+        res_start = conf['reservation']['start_time']
+        res_end   = conf['reservation']['end_time']
+        conf['reservation']['start_time'] = from_isostring(res_start)
+        conf['reservation']['end_time']   = from_isostring(res_end)
         
         return json_data
     
     def _get_rendered_response(self):
         # initialize parameters to send to api
-        res_liveid = self._get_param('reservation') or \
+        vehid = self._get_param('vehicle') or \
+            None
+        start_iso = self._get_param('start_time') or \
+            None
+        end_iso = self._get_param('end_time') or \
             None
         
         params = {}
+        params['start_time'] = start_iso
+        params['end_time'] = end_iso
+        params['vehicle'] = vehid
         
-        reservation_json, headers = self.__fetch(
-            ''.join(['http://', self.__const.API_HOST, '/reservations/', res_liveid, '.json']),
-            'GET', 
+        res_confirmation_json, headers = self.__fetch(
+            ''.join(['http://', self.__const.API_HOST, '/reservations.json']),
+            'POST', 
             params,
             self._package_cookies()
         );
         
-        reservation_json = \
-            self._clean_fetched_data(reservation_json, None)
+        res_confirmation_json = \
+            self._clean_fetched_data(res_confirmation_json, None)
         
-        values = reservation_json
+        values = res_confirmation_json
         
-        content = self.__render('cancel_reservation.html', values)
+        if not self._is_error(res_confirmation_json):
+            content = self._redirect_to('reservation_info', {
+                'reservation': res_confirmation_json['confirmation']['reservation']['liveid']
+            })
         
         return content, headers
     

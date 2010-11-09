@@ -4,20 +4,22 @@
 {% block content %}
     <section id="cancel-reservation-screen" class="current screen">
       <div class="titlebar">
-        <a class="back" href="my_reservations">Back</a>
+        <a class="back" href="{{ return_url }}">Back</a>
         <h1>Cancel Reservation</h1>
       </div>
       
-      <p class="info">Are you sure you want to cancel your reservation for a {{
-        model_name }} at {{ pod_name }} from {{ start_time|time }}, {{
-        start_time|date }} until {{ end_time|time }}, {{ end_time|date }}?</p>
-      <form action="confirm_cancel">
-        <input type="hidden" name="reservation" value="{{ reservation_id }}" />
-        <input type="hidden" name="vehicle" value="{{ vehicle_id }}" />
-        <input type="hidden" name="start_time" value="{{ start_time }}" />
-        <input type="hidden" name="end_time" value="{{ end_time }}" />
-        <button type="submit">Yes, Cancel!</button>
-      </form>
+      <p class="info">Are you sure you want to cancel your reservation for a {{ reservation.vehicle.model.name }} at {{ reservation.vehicle.pod.name }} from {{ reservation.start_time|time }}, {{  reservation.start_time|date }} until {{ reservation.end_time|time }}, {{ reservation.end_time|date }}?</p>
+      <ul>
+        <li>
+          <form action="confirm_cancellation" method="GET">
+            <input type="hidden" name="reservation" value="{{ reservation.liveid }}" />
+            <input type="hidden" name="vehicle" value="{{ reservation.vehicle.id }}" />
+            <input type="hidden" name="start_time" value="{{ reservation.start_time|date:"Y-m-d\TH:i" }}" />
+            <input type="hidden" name="end_time" value="{{ reservation.end_time|date:"Y-m-d\TH:i" }}" />
+            <button type="submit">Yes, Cancel!</button>
+          </form>
+        </li>
+      </ul>
     </section>
 {% endblock %}
 

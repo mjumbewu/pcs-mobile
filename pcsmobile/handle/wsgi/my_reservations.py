@@ -66,6 +66,7 @@ class MyReservationsHandler (_BaseHandler):
             if period_str == '':
                 reservations.sort(key=lambda r: r['status'])
         
+        values['reflect_url'] = self._construct_reflect_path()
         content = self.__render('my_reservations.html', values)
         
         return content, headers

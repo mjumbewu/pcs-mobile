@@ -65,13 +65,14 @@ h2 {
 }
 
 .info {
-  background-color: #e0e0e0;
+  background-color: #F0F0F0;
   font-size: 14px;
   margin: 0px;
   padding: 10px;
 }
 
 ul {
+  background-color: #F8F8F8;
   border: 1px solid grey;
   margin: 10px;
   padding: 0px;
@@ -134,18 +135,20 @@ button, input[type="text"], input[type="password"] {
 select {
   border: none;
   background: none;
+  font: inherit;
+  display: inline-block;
 }
 
-select.month {
+select.month, select.hour {
   width: 40%;
   text-align: right;
 }
 
-select.year {
+select.year, select.midi {
   width: 40%;
 }
 
-select.day {
+select.day, select.minute {
   width: 20%;
   text-align: center;
 }
@@ -166,7 +169,7 @@ button:hover {
 }
 
 button[disabled="disabled"] {
-  color: #404040;
+  color: #808080;
   text-decoration: line-through;
 }
 

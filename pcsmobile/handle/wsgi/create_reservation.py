@@ -8,9 +8,7 @@ from util.TimeZone import from_isostring
 from util.TimeZone import to_isostring
 
 class NewReservationHandler (_BaseTimeHandler):
-    """Despite its name, the ChooseVehicleHandler is not a chooser.
-    (i.e., _chooser._BaseChooseHandler)"""
-    
+
     def __init__(self, constants = Constants(), fetcher = Fetcher(), renderer = Renderer()):
         super(NewReservationHandler, self).__init__()
         self.__const = constants

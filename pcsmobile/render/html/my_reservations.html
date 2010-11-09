@@ -2,15 +2,14 @@
 
 {% block title %}Reservations{% endblock %}
 {% block content %}
-    <form id="my-reservations-screen" class="screen"
-          action="my_reservations" method="GET">
+    <section id="my-reservations-screen" class="screen">
       <div class="titlebar">
         <a class="back" href="my_session">Home</a>
         <h1>Reservations</h1>
-        <button type="submit">Update</button>
+        <!--button type="submit">Update</button-->
       </div>
       
-      <ul class="edgetoedge">
+      <!--ul class="edgetoedge">
         <li>
           <select name="period">
             <option value="" 
@@ -25,7 +24,7 @@
             {% endfor %}
           </select>
         </li>
-      </ul>
+      </ul-->
       
       <ul class="rounded reservations">
       {% for reservation in reservation_list.reservations %}
@@ -36,35 +35,38 @@
           <span class="reservation-price">for ${{ reservation.price.total_amount }}</span>
           
           {% ifequal reservation.status 0 %}
-            <form method="GET" action="/reservations/{{ reservation.id }}/editor.html">
-              <input type="hidden" name="start_time" value="{{ reservation.start_time }}" />
-              <input type="hidden" name="end_time" value="{{ reservation.end_time }}" />
+            <form method="GET" action="edit_reservation">
+              <input type="hidden" name="start_time" value="{{ reservation.start_time|date:"Y-m-d\TH:i" }}" />
+              <input type="hidden" name="end_time" value="{{ reservation.end_time|date:"Y-m-d\TH:i" }}" />
               <input type="hidden" name="status" value="{{ reservation.status }}" />
-              <input type="hidden" name="confirmid" value="{{ reservation.confirmid }}" />
-              <input type="submit" value="Edit Reservation" />
+              <input type="hidden" name="reservation" value="{{ reservation.liveid }}" />
+              <button type="submit">Edit</button>
             </form>
           {% endifequal %}
           
           {% ifequal reservation.status 1 %}
-            <form method="GET" action="/reservations/current/{{ reservation.confirmid }}/editor.html">
-              <input type="hidden" name="start_time" value="{{ reservation.start_time }}" />
-              <input type="hidden" name="end_time" value="{{ reservation.end_time }}" />
+            <form method="GET" action="edit_reservation">
+              <input type="hidden" name="start_time" value="{{ reservation.start_time|date:"Y-m-d\TH:i" }}" />
+              <input type="hidden" name="end_time" value="{{ reservation.end_time|date:"Y-m-d\TH:i" }}" />
               <input type="hidden" name="status" value="{{ reservation.status }}" />
-              <input type="hidden" name="confirmid" value="{{ reservation.confirmid }}" />
-              <input type="submit" value="Edit Reservation" />
+              <input type="hidden" name="reservation" value="{{ reservation.liveid }}" />
+              <button type="submit">Edit</button>
             </form>
-            <form method="GET" action="/cancel_reservation">
-              <input type="hidden" name="reservation" value="{{ reservation.id }}" />
-              <input type="hidden" name="start_time" value="{{ reservation.start_time }}" />
-              <input type="hidden" name="end_time" value="{{ reservation.end_time }}" />
+            <form method="GET" action="cancel_reservation">
+              <input type="hidden" name="start_time" value="{{ reservation.start_time|date:"Y-m-d\TH:i" }}" />
+              <input type="hidden" name="end_time" value="{{ reservation.end_time|date:"Y-m-d\TH:i" }}" />
               <input type="hidden" name="status" value="{{ reservation.status }}" />
-              <input type="hidden" name="confirmid" value="{{ reservation.confirmid }}" />
-              <input type="submit" value="Cancel Reservation" />
+              <input type="hidden" name="reservation" value="{{ reservation.liveid }}" />
+              <input type="hidden" name="vehicle" value="{{ reservation.vehicle.id }}" />
+              <input type="hidden" name="model_name" value="{{ reservation.vehicle.model.name }}" />
+              <input type="hidden" name="pod_name" value="{{ reservation.vehicle.pod.name }}" />
+              <input type="hidden" name="return_url" value="{{ reflect_url }}" />
+              <button type="submit">Cancel</button>
             </form>
           {% endifequal %}
         </li>
       {% endfor %}
       </ul>
-    </form>
+    </section>
 {% endblock %}
 

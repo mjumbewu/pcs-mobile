@@ -1,6 +1,10 @@
 from google.appengine.ext import webapp
 
 class _BaseHandler (webapp.RequestHandler):
+    def __init__(self):
+        super(_BaseHandler, self).__init__()
+        self.__status = 200
+    
     def _is_error(self, json_doc):
         return 'error' in json_doc
     
@@ -45,13 +49,23 @@ class _BaseHandler (webapp.RequestHandler):
             cookies_str = '%s=%s; expires=%s;' % (cookie, value, expires)
             self._set_response_headers({'Set-Cookie':cookies_str})
     
+    def _redirect_to(self, fwd_url, params=None):
+        self.__status = 302
+        
+        if params:
+            import urllib
+            fwd_url += '?' + urllib.urlencode(params)
+        self._set_response_headers({'Location':fwd_url})
+        
+        return '<html><head><title></title></head><body>If you are not redirected, please press <a href="%s">here</a>.</body></html>' % fwd_url
+    
     def _set_response_headers(self, headers):
         for (header, value) in headers.items():
             self.response.headers.add_header(header, value)
     
     def _set_response_content(self, content):
         self.response.out.write(content);
-        self.response.set_status(200);
+        self.response.set_status(self.__status);
     
     def _construct_reflect_path(self):
         """Create a return path that you can pass to other screens."""

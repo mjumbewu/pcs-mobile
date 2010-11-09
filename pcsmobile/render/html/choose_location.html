@@ -15,11 +15,43 @@
       {% endfor %}
       
       <ul class="rounded">
+        <li><input type="radio" name="{{ return_param }}" value="{{ location.id }}" id="location__geocurrent" />
+          <label for="location__geocurrent">Current Location</label></li>
         {% for location in locations %}
         <li><input type="radio" name="{{ return_param }}" value="{{ location.id }}" id="location_{{ location.id }}" {% ifequal current_value location.id %}checked="checked"{% endifequal %} />
           <label for="location_{{ location.id }}">{{ location.name }}</label></li>
         {% endfor %}
       </ul>
+    
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+      <script>
+        function success(position) {
+          var curloc = $('#location__geocurrent')
+          var curloc_label = $('label[for="location__geocurrent"]')
+          curloc.attr('value', '(' + position.coords.latitude + ',' + position.coords.longitude + ')'
+          curloc_label.text('Current Location')
+        }
+        
+        function findlocation() {
+          var curloc_label = $('label[for="location__geocurrent"]')
+          curloc_label.text('Finding Location...')
+          
+          navigator.geolocation.getCurrentPosition(success, error);
+        }
+        
+        function error(msg) {
+          var curloc = $('#location__geocurrent')
+          var curloc_label = $('span[for="location__geocurrent"]')
+          curloc_label.text('Cannot Find Location')
+          curloc.addClass('hidden')
+        }
+        
+        if (navigator.geolocation) {
+          findlocation();
+        } else {
+          error('Finding current location not supported');
+        }
+      </script>
     </form>
 {% endblock %}
 

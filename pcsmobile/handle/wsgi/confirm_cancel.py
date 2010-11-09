@@ -15,16 +15,23 @@ class ConfirmCancellationHandler (_BaseHandler):
     
     def _get_rendered_response(self):
         params = self._get_params()
-        resid = self._get_param(reservation)
+        resid = self._get_param('reservation')
         
-        values, headers = self.__fetch(
-            ''.join(['http://', self.__const.API_HOST, '/reservation/', resid, '.json']),
+        res_confirmation_json, headers = self.__fetch(
+            ''.join(['http://', self.__const.API_HOST, '/reservations/', resid, '.json']),
             'DELETE', 
-            self._get_params(),
-            self._get_headers()
+            params,
+            self._package_cookies()
         );
         
-        content = self.__render('confirm_cancel.html', values)
+        values = res_confirmation_json
+#        content = self.__render('confirm_cancel.html', values)
+        if not self._is_error(res_confirmation_json):
+            content = self._redirect_to('reservation_info', {
+                'reservation': res_confirmation_json['confirmation']['reservation']['liveid']
+            })
+        else:
+            content = self.__render('error_catcher.html', values)
         
         return content, headers
     
