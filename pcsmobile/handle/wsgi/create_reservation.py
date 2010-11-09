@@ -7,10 +7,10 @@ from util.TimeZone import current_time
 from util.TimeZone import from_isostring
 from util.TimeZone import to_isostring
 
-class NewReservationHandler (_BaseTimeHandler):
+class CreateReservationHandler (_BaseTimeHandler):
 
     def __init__(self, constants = Constants(), fetcher = Fetcher(), renderer = Renderer()):
-        super(NewReservationHandler, self).__init__()
+        super(CreateReservationHandler, self).__init__()
         self.__const = constants
         self.__fetch = fetcher.fetch_json
         self.__render = renderer.render
@@ -117,7 +117,7 @@ class NewReservationHandler (_BaseTimeHandler):
 #            values.update(
 #                self._build_chooser_queries(vehicle_availability_json))
         
-        content = self.__render('new_reservation.html', values)
+        content = self.__render('create_reservation.html', values)
         
         return content, headers
     

@@ -47,7 +47,7 @@ handlers:
   script: pcsmobile/handle/wsgi/router.py
   secure: never
 
-- url: /new_reservation
+- url: /create_reservation
   script: pcsmobile/handle/wsgi/router.py
   secure: never
 
