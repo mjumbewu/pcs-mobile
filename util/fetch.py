@@ -18,7 +18,7 @@ class Fetcher (object):
         method = method_map.get(method);
         
         query = urllib.urlencode(params)
-        if method in (urlfetch.GET, urlfetch.DELETE):
+        if method in (urlfetch.GET, urlfetch.DELETE, urlfetch.PUT):
             connector = '&' if '?' in url else '?'
             url = connector.join([url, query])
             query = ''
