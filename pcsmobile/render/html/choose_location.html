@@ -15,7 +15,7 @@
       {% endfor %}
       
       <ul class="rounded">
-        <li><input type="radio" name="{{ return_param }}" value="{{ location.id }}" id="location__geocurrent" />
+        <li class="hidden"><input type="radio" name="{{ return_param }}" value="{{ location.id }}" id="location__geocurrent" />
           <label for="location__geocurrent">Current Location</label></li>
         {% for location in locations %}
         <li><input type="radio" name="{{ return_param }}" value="{{ location.id }}" id="location_{{ location.id }}" {% ifequal current_value location.id %}checked="checked"{% endifequal %} />
@@ -33,6 +33,9 @@
         }
         
         function findlocation() {
+          var curloc_row = $('#location__geocurrent').parent()
+          curloc_row.removeClass('hidden')
+          
           var curloc_label = $('label[for="location__geocurrent"]')
           curloc_label.text('Finding Location...')
           
@@ -43,7 +46,6 @@
           var curloc = $('#location__geocurrent')
           var curloc_label = $('span[for="location__geocurrent"]')
           curloc_label.text('Cannot Find Location')
-          curloc.addClass('hidden')
         }
         
         if (navigator.geolocation) {

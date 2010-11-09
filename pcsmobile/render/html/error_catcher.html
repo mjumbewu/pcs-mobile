@@ -13,6 +13,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable = no" /-->
     <!--link href="styles/main.css" rel="stylesheet" type="text/css" charset="utf-8" />
     <link href="styles/pcs/mobile.css" rel="stylesheet" type="text/css" charset="utf-8" /-->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    
+    <script>
+      $(document).ready(function() {
+        $(window).bind( "scroll", scrollTitleBar );
+      })
+      
+      function scrollTitleBar() {
+        var win_y = $(window).height();
+        var scroll_y = $(window).scrollTop();
+        $(".titlebar").css({ top: scroll_y + "px" });
+      }
+    </script>
   </head>
   
   <body>

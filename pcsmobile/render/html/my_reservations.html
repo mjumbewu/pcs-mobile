@@ -28,12 +28,12 @@
       
       <ul class="rounded reservations">
       {% for reservation in reservation_list.reservations %}
-        <li>
+        <li class="reservation-record">
           <span>{{ reservation.vehicle.model.name }} at {{ reservation.vehicle.pod.name }}</span>
-          <span class="reservation-time">from {{ reservation.start_time|time }}, {{ reservation.start_time|date }}</span>
-          <span class="reservation-time">until {{ reservation.end_time|time }}, {{ reservation.end_time|date }}</span>
-          <span class="reservation-price">for ${{ reservation.price.total_amount }}</span>
-          <span class="memo">{{ reservation.memo }}</span>
+          <span class="reservation-field reservation-memo">{{ reservation.memo }}</span>
+          <span class="reservation-field reservation-start">{{ reservation.start_time|time }}, {{ reservation.start_time|date }}</span>
+          <span class="reservation-field reservation-end">{{ reservation.end_time|time }}, {{ reservation.end_time|date }}</span>
+          <span class="reservation-field reservation-price">${{ reservation.price.total_amount }}</span>
           
           {% ifequal reservation.status 0 %}
             <form method="GET" action="modify_reservation">

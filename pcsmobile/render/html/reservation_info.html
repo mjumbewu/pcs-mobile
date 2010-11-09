@@ -34,10 +34,12 @@
           <label>Memo:</label>
           <span>{{ reservation.memo }}</span>
         </li>
+        {% if reservation.price %}
         <li>
           <label>Price:</label>
           <span>${{ reservation.price.total_amount }}</span>
         </li>
+        {% endif %}
       </ul>
     </section>
 {% endblock %}
