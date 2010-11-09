@@ -8,8 +8,12 @@
         <h1>Your Reservation</h1>
       </div>
       
+      {% if event %}
+      <h2>Your reservation has been {{ event }}</h2>
+      {% else %}
       <h2>You have reserved...</h2>
-      <ul>
+      {% endif %}
+      <ul class="screenparams">
         <li>
           <label>Vehicle:</label>
           <span>{{ reservation.vehicle.model.name }}</span>
@@ -27,8 +31,12 @@
           <span>{{ reservation.end_time|date:"g:iA, D M d, Y" }}</span>
         </li>
         <li>
-          <label>Total price:</label>
-          <span>${{ reservation.price.total_amount }}?</span>
+          <label>Memo:</label>
+          <span>{{ reservation.memo }}</span>
+        </li>
+        <li>
+          <label>Price:</label>
+          <span>${{ reservation.price.total_amount }}</span>
         </li>
       </ul>
     </section>

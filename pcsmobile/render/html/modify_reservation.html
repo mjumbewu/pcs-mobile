@@ -1,0 +1,28 @@
+{% extends "error_catcher.html" %}
+
+{% block title %}Edit Reservation{% endblock %}
+{% block content %}
+    <form id="modify-reservation-screen" class="screen"
+          method="GET" action="confirm_modification">
+      <div class="titlebar">
+        <a class="back" href="my_reservations">Cancel</a>
+        <h1>Edit Reservation</h1>
+      </div>
+      
+      <ul class="edgetoedge screenparams">
+        <li class="labeledfield"><label>From</label> <a class="start time" href="choose_datetime?{{ choose_start_time_query }}">{{ reservation.start_time|date:"g:iA, D M d, Y" }}</a></li>
+        <li class="labeledfield"><label>Until</label> <a class="end time" href="choose_datetime?{{ choose_end_time_query }}">{{ reservation.end_time|date:"g:iA, D M d, Y" }}</a></li>
+        <li class="labeledfield"><label>Memo</label> <span><input type="text" name="memo" value="{{ reservation.memo }}" maxlength="25" /></span></li>
+      </ul>
+      
+      <input type="hidden" name="reservation" value="{{ reservation.liveid }}" />
+      <input type="hidden" name="vehicle" value="{{ reservation.vehicle.id }}" />
+      <input type="hidden" name="start_time" value="{{ reservation.start_time|date:"Y-m-d\TH:i" }}" />
+      <input type="hidden" name="end_time" value="{{ reservation.end_time|date:"Y-m-d\TH:i" }}" />
+      
+      <ul>
+        <li><button type="submit">Update My Reservation!</button</li>
+      </ul>
+    </form>
+{% endblock %}
+

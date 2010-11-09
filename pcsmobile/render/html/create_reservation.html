@@ -15,6 +15,10 @@
       <input type="hidden" name="start_time" value="{{ vehicle_availability.start_time|date:"Y-m-d\TH:i" }}" />
       <input type="hidden" name="end_time" value="{{ vehicle_availability.end_time|date:"Y-m-d\TH:i" }}" />
       
+      <ul class="rounded screenparams">
+        <li><label>Memo</label> <span><input type="text" name="memo" maxlength="25" /></span></li>
+      </ul>
+      
       <ul>
         <li><button type="submit">Yes, Reserve!</button</li>
       </ul>

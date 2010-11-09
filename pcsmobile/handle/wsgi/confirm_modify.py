@@ -7,10 +7,10 @@ from util.TimeZone import current_time
 from util.TimeZone import from_isostring
 from util.TimeZone import to_isostring
 
-class ConfirmReservationHandler (_BaseHandler):
+class ConfirmModificationHandler (_BaseHandler):
     
     def __init__(self, constants = Constants(), fetcher = Fetcher(), renderer = Renderer()):
-        super(ConfirmReservationHandler, self).__init__()
+        super(ConfirmModificationHandler, self).__init__()
         self.__const = constants
         self.__fetch = fetcher.fetch_json
         self.__render = renderer.render
@@ -39,6 +39,8 @@ class ConfirmReservationHandler (_BaseHandler):
     
     def _get_rendered_response(self):
         # initialize parameters to send to api
+        resid = self._get_param('reservation') or \
+            None
         vehid = self._get_param('vehicle') or \
             None
         start_iso = self._get_param('start_time') or \
@@ -52,11 +54,12 @@ class ConfirmReservationHandler (_BaseHandler):
         params['start_time'] = start_iso
         params['end_time'] = end_iso
         params['vehicle'] = vehid
-        params['memo'] = memo
+        if memo is not None:
+            params['memo'] = memo
         
         res_confirmation_json, headers = self.__fetch(
-            ''.join(['http://', self.__const.API_HOST, '/reservations.json']),
-            'POST', 
+            ''.join(['http://', self.__const.API_HOST, '/reservations/', resid, '.json']),
+            'PUT', 
             params,
             self._package_cookies()
         );
@@ -69,7 +72,7 @@ class ConfirmReservationHandler (_BaseHandler):
         if not self._is_error(res_confirmation_json):
             content = self._redirect_to('reservation_info', {
                 'reservation': res_confirmation_json['confirmation']['reservation']['liveid'],
-                'event': 'created'
+                'event': 'updated'
             })
         else:
             content = self.__render('error_catcher.html', values)

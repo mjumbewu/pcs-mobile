@@ -41,6 +41,8 @@ class ReservationInfoHandler (_BaseHandler):
         # initialize parameters to send to api
         res_liveid = self._get_param('reservation') or \
             None
+        res_event = self._get_param('event') or \
+            None
         
         params = {}
         
@@ -55,6 +57,8 @@ class ReservationInfoHandler (_BaseHandler):
             self._clean_fetched_data(res_information_json, None)
         
         values = res_information_json
+        if res_event:
+            values['event'] = res_event
         
         content = self.__render('reservation_info.html', values)
         

@@ -55,6 +55,14 @@ handlers:
   script: pcsmobile/handle/wsgi/router.py
   secure: never
 
+- url: /modify_reservation
+  script: pcsmobile/handle/wsgi/router.py
+  secure: never
+
+- url: /confirm_modification
+  script: pcsmobile/handle/wsgi/router.py
+  secure: never
+
 - url: /cancel_reservation
   script: pcsmobile/handle/wsgi/router.py
   secure: never

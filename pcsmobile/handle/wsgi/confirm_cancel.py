@@ -28,7 +28,8 @@ class ConfirmCancellationHandler (_BaseHandler):
 #        content = self.__render('confirm_cancel.html', values)
         if not self._is_error(res_confirmation_json):
             content = self._redirect_to('reservation_info', {
-                'reservation': res_confirmation_json['confirmation']['reservation']['liveid']
+                'reservation': res_confirmation_json['confirmation']['reservation']['liveid'],
+                'event': 'cancelled'
             })
         else:
             content = self.__render('error_catcher.html', values)
