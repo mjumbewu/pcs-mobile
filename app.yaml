@@ -15,6 +15,9 @@ handlers:
 - url: /scripts
   static_dir: scripts
 
+- url: /images
+  static_dir: images
+
 - url: /index.html
   script: pcsmobile/handle/wsgi/router.py
   secure: always

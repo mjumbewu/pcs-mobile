@@ -8,12 +8,16 @@
     <title>PCS Anywhere - {% block title %}{% endblock %}</title>
 {% endif %}
     <link rel="stylesheet" href="/styles/simple.css" />
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable = no" />
+    <!--meta name="apple-mobile-web-app-capable" content="yes" /-->
+    
     <!--link rel="stylesheet" href="/styles/pcs-basic-html.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable = no" /-->
     <!--link href="styles/main.css" rel="stylesheet" type="text/css" charset="utf-8" />
     <link href="styles/pcs/mobile.css" rel="stylesheet" type="text/css" charset="utf-8" /-->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    
+    <!--script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
     
     <script>
       $(document).ready(function() {
@@ -25,12 +29,12 @@
         var scroll_y = $(window).scrollTop();
         $(".titlebar").css({ top: scroll_y + "px" });
       }
-    </script>
+    </script-->
   </head>
   
   <body>
 {% if error %}
-    <div id="error-screen" class="current screen">
+    <div id="error-screen" class="screen">
       <div class="titlebar">
         <h1>Error</h1>
       </div>
