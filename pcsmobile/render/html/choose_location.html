@@ -28,7 +28,7 @@
         function success(position) {
           var curloc = $('#location__geocurrent')
           var curloc_label = $('label[for="location__geocurrent"]')
-          curloc.attr('value', '(' + position.coords.latitude + ',' + position.coords.longitude + ')'
+          curloc.attr('value', '' + position.coords.latitude + ',' + position.coords.longitude + '')
           curloc_label.text('Current Location')
         }
         
