@@ -15,13 +15,17 @@ class ConfirmModificationHandler (_BaseHandler):
         self.__fetch = fetcher.fetch_json
         self.__render = renderer.render
     
-    def _clean_fetched_data(self, json_data, defaults):
-        allowed_error_codes = ()
+    def _clean_fetched_data(self, json_data, **defaults):
+        allowed_error_codes = ('no_change_requested',)
         
         if self._is_error(json_data):
             if json_data['error']['code'] in allowed_error_codes:
-                # Handle the errors
-                pass
+                json_data = {'confirmation' : {
+                    'reservation' : {
+                        'start_time' : to_isostring(defaults['start_time']),
+                        'end_time' : to_isostring(defaults['end_time']),
+                        'liveid' : defaults['liveid'] }
+                }}
             
             # All other errors should just be sent to the default handler.
             else:
@@ -47,6 +51,10 @@ class ConfirmModificationHandler (_BaseHandler):
             None
         end_iso = self._get_param('end_time') or \
             None
+        old_start_iso = self._get_param('old_start_time') or \
+            None
+        old_end_iso = self._get_param('old_end_time') or \
+            None
         memo = self._get_param('memo') or \
             None
         
@@ -57,15 +65,39 @@ class ConfirmModificationHandler (_BaseHandler):
         if memo is not None:
             params['memo'] = memo
         
+        start_time = from_isostring(start_iso)
+        end_time = from_isostring(end_iso)
+        old_start_time = from_isostring(old_start_iso)
+        old_end_time = from_isostring(old_end_iso)
+        
+        if current_time() > start_time:
+            if old_end_time > end_time:
+                params['action'] = 'early'
+            else:
+                params['action'] = 'extend'
+        else:
+            params['action'] = 'edit'
+        
+#        if start_time != old_start_time or end_time != old_end_time:
         res_confirmation_json, headers = self.__fetch(
             ''.join(['http://', self.__const.API_HOST, '/reservations/', resid, '.json']),
             'PUT', 
             params,
             self._package_cookies()
         );
+#        else:
+#            res_confirmation_json = {'confirmation' : {
+#                'reservation' : {
+#                    'start_time' : to_isostring(start_time),
+#                    'end_time' : to_isostring(end_time),
+#                    'liveid' : resid }}}
+#            headers = {}
         
         res_confirmation_json = \
-            self._clean_fetched_data(res_confirmation_json, None)
+            self._clean_fetched_data(res_confirmation_json, 
+                start_time=start_time, 
+                end_time=end_time, 
+                liveid=resid)
         
         values = res_confirmation_json
         

@@ -29,6 +29,13 @@ class ModifyReservationHandler (_BaseTimeHandler):
         
         res = json_data['reservation']
         
+        # convert the old times as well, unless the old times don't exist yet;
+        # in that case, copy them from the current times.
+        old_start = res.get('old_start_time', res['start_time'])
+        old_end   = res.get('old_end_time', res['end_time'])
+        res['old_start_time'] = from_isostring(old_start)
+        res['old_end_time']   = from_isostring(old_end)
+        
         # convert all iso to datetime
         res_start = res['start_time']
         res_end   = res['end_time']
@@ -37,11 +44,13 @@ class ModifyReservationHandler (_BaseTimeHandler):
         
         return json_data
     
-    def _build_chooser_queries(self, reservation_json):
+    def _build_chooser_queries(self, reservation_json, status):
         res = reservation_json['reservation']
         
         cur_start = to_isostring(res['start_time'])
         cur_end = to_isostring(res['end_time'])
+        old_start = to_isostring(res['old_start_time'])
+        old_end = to_isostring(res['old_end_time'])
         
         queries = {}
         queries['choose_start_time_query'] = \
@@ -52,7 +61,10 @@ class ModifyReservationHandler (_BaseTimeHandler):
                   'vehicle_model' : res['vehicle']['model']['name'],
                   'vehicle_pod' : res['vehicle']['pod']['name'],
                   'memo' : res['memo'],
-                  'end_time' : cur_end })
+                  'end_time' : cur_end,
+                  'status' : status,
+                  'old_start_time' : old_start,
+                  'old_end_time' : old_end })
         
         queries['choose_end_time_query'] = \
             self._construct_chooser_query('end_time',
@@ -62,7 +74,10 @@ class ModifyReservationHandler (_BaseTimeHandler):
                   'vehicle' : res['vehicle']['id'],
                   'vehicle_model' : res['vehicle']['model']['name'],
                   'vehicle_pod' : res['vehicle']['pod']['name'],
-                  'memo' : res['memo'] })
+                  'memo' : res['memo'],
+                  'status' : status,
+                  'old_start_time' : old_start,
+                  'old_end_time' : old_end })
         
         return queries
     
@@ -79,15 +94,19 @@ class ModifyReservationHandler (_BaseTimeHandler):
         start_iso = self._get_param('start_time') or \
             self._build_time_param('start_time') or \
             None
+        old_start_iso = self._get_param('old_start_time') or \
+            None
         end_iso = self._get_param('end_time') or \
             self._build_time_param('end_time') or \
+            None
+        old_end_iso = self._get_param('old_end_time') or \
             None
         memo = self._get_param('memo') or \
             None
         status = self._get_param('status') or \
             None
         
-        if None in (resid, vehid, vehmodel, vehpod, start_iso, end_iso, memo):
+        if None in (resid, vehid, vehmodel, vehpod, start_iso, old_start_iso, end_iso, old_end_iso, memo):
             # Only send start and end time if they are not None.  If we leave them 
             # out, the server will just use the default time.
             params = {}
@@ -115,6 +134,8 @@ class ModifyReservationHandler (_BaseTimeHandler):
                     },
                     'start_time' : start_iso,
                     'end_time' : end_iso,
+                    'old_start_time' : old_start_iso,
+                    'old_end_time' : old_end_iso,
                     'memo' : memo
                 }
             }
@@ -126,9 +147,24 @@ class ModifyReservationHandler (_BaseTimeHandler):
         values = reservation_json
         if not self._is_error(reservation_json):
             values.update(
-                self._build_chooser_queries(reservation_json))
+                self._build_chooser_queries(reservation_json, status))
         
-        values['status'] = status
+        status_map = {'0':'current','1':'upcoming','2':'past'}
+        values['status'] = status_map[status]
+        def _ceil_time(dt):
+            minutes = dt.minute % 15
+            delta_minutes = 15 - minutes
+            
+            if delta_minutes == 15 and dt.second == 0:
+                return dt
+            else:
+                import datetime
+                delta = datetime.timedelta(minutes=delta_minutes)
+                ceil_time = dt.replace(second=0) + delta
+                
+                return ceil_time
+            
+        values['soonest_end_time'] = _ceil_time(current_time())
         content = self.__render('modify_reservation.html', values)
         
         return content, headers

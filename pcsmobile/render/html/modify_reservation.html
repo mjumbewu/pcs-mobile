@@ -10,7 +10,11 @@
       </div>
       
       <ul class="edgetoedge screenparams">
+        {% ifequal status "upcoming" %}
         <li class="labeledfield"><label>From</label> <a class="start time" href="choose_datetime?{{ choose_start_time_query }}">{{ reservation.start_time|date:"g:iA, D M d, Y" }}</a></li>
+        {% else %}
+        <li class="labeledfield"><label>From</label> <span class="start time">{{ reservation.start_time|date:"g:iA, D M d, Y" }}</span></li>
+        {% endifequal %}
         <li class="labeledfield"><label>Until</label> <a class="end time" href="choose_datetime?{{ choose_end_time_query }}">{{ reservation.end_time|date:"g:iA, D M d, Y" }}</a></li>
         <li class="labeledfield"><label>Memo</label> <span><input type="text" name="memo" value="{{ reservation.memo }}" maxlength="25" /></span></li>
       </ul>
@@ -19,9 +23,17 @@
       <input type="hidden" name="vehicle" value="{{ reservation.vehicle.id }}" />
       <input type="hidden" name="start_time" value="{{ reservation.start_time|date:"Y-m-d\TH:i" }}" />
       <input type="hidden" name="end_time" value="{{ reservation.end_time|date:"Y-m-d\TH:i" }}" />
+      <input type="hidden" name="old_start_time" value="{{ reservation.old_start_time|date:"Y-m-d\TH:i" }}" />
+      <input type="hidden" name="old_end_time" value="{{ reservation.old_end_time|date:"Y-m-d\TH:i" }}" />
       
       <ul>
         <li><button type="submit">Update My Reservation!</button</li>
+      </ul>
+      
+      <ul>
+        <li>
+          <button type="button" onclick="this.form.elements['end_time'].value='{{ soonest_end_time|date:"Y-m-d\TH:i" }}'; this.form.submit();">End Now</button>
+        </li>
       </ul>
     </form>
 {% endblock %}
