@@ -18,6 +18,8 @@ body {
 /*  color: #E0E0E0;*/
   color: #CAEDA6;
   height: 40px;
+  left: 0px;
+  margin: 0px;
   position: fixed;
   top: 0px;
   width: 100%;
@@ -109,7 +111,31 @@ ul.rounded {
   -webkit-border-radius: 5px;
 }
 
-ul li:last-child {
+
+ul.rounded {
+  display: table;
+  margin: 3%;
+  width: 94%;
+}
+
+ul.rounded>li {
+  display: table-row;
+}
+
+ul.rounded>li>* {
+  display: table-cell;
+  height: 100%;
+  padding: 10px;
+  border-bottom: 1px solid gray;
+}
+
+ul.rounded>li>form>button {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+ul.rounded>li:last-child>* {
   border: none;
 }
 
