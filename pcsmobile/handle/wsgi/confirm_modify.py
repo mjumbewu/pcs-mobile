@@ -7,6 +7,16 @@ from util.TimeZone import current_time
 from util.TimeZone import from_isostring
 from util.TimeZone import to_isostring
 
+RetryErrors = ()
+try:
+    # Try importing DownloadError.  Since the reservation change was in all 
+    # likelihood successful before he download error, we want to add this to
+    # the OK errors.
+    from google.appengine.api.urlfetch import DownloadError
+    RetryErrors += (DownloadError,)
+except:
+    pass
+
 class ConfirmModificationHandler (_BaseHandler):
     
     def __init__(self, constants = Constants(), fetcher = Fetcher(), renderer = Renderer()):
@@ -79,12 +89,22 @@ class ConfirmModificationHandler (_BaseHandler):
             params['action'] = 'edit'
         
 #        if start_time != old_start_time or end_time != old_end_time:
-        res_confirmation_json, headers = self.__fetch(
-            ''.join(['http://', self.__const.API_HOST, '/reservations/', resid, '.json']),
-            'PUT', 
-            params,
-            self._package_cookies()
-        );
+        try:
+            res_confirmation_json, headers = self.__fetch(
+                ''.join(['http://', self.__const.API_HOST, '/reservations/', resid, '.json']),
+                'PUT', 
+                params,
+                self._package_cookies()
+            );
+        except RetryErrors:
+            reservation_json, headers = self.__fetch(
+                ''.join(['http://', self.__const.API_HOST, '/reservations/', resid, '.json']),
+                'GET',
+                params,
+                self._package_cookies()
+            );
+            res_confirmation_json = {'confirmation':reservation_json};
+            res_confirmation_json['confirmation'].update({'event':'modify'});
 #        else:
 #            res_confirmation_json = {'confirmation' : {
 #                'reservation' : {
