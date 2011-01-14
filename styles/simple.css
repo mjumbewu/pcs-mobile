@@ -1,45 +1,63 @@
+/*
+ * General Styles
+ * --------------
+ * Screen body, headers, paragraphs, lists of fields and links, etc.
+ */
 body {
-/*  background-color: #E0E0E0;*/
   background-color: #CAEDA6;
   color: #404040;
   font-family: Helvetica, Arial, Sans;
   font-size: 16px;
   margin: 0px;
   padding: 0px;
-  padding-top: 40px;
+  padding-top: 3em;
 }
 
+/* 
+ * Header
+ */
+
 .titlebar {
-  -webkit-box-shadow: black 0px 0px 3px;
-/*  background-color: #40A0E0;*/
+  -webkit-box-shadow: black 0em 0em 0.2em;
   background-color: #69be56;
-/*  border-bottom: 1px solid #205070;*/
   border-bottom: 1px solid #27531F;
-/*  color: #E0E0E0;*/
   color: #CAEDA6;
-  height: 40px;
-  left: 0px;
-  margin: 0px;
+  height: 3em;
+  left: 0em;
+  margin: 0em;
   position: fixed;
-  top: 0px;
+  top: 0em;
   width: 100%;
 }
 
 .titlebar a, .titlebar button {
   color: white;
-  font-size: 14px;
+  display: block;
+  font-size: 0.8em;
+  height: 100%;
+  line-height: 3.75em;
+  position: absolute;
+  text-shadow: rgba(0, 0, 0, 0.3) 0px -1px 0;
+  top: 0px;
+  vertical-align: middle;
+  width: auto;
 }
 
-h2 {
-  margin: 15px 5px 5px 5px;
-  font-size: 18px;
-  text-shadow: rgba(255, 255, 255, 0.2) 0 1px 1px;
+.titlebar .back {
+  left: 0px;
+  margin-left: 5px;
+}
+
+.titlebar button {
+  background: none;
+  right: 0px;
+  margin-right: 5px;
 }
 
 .titlebar h1 {
-  font-size: 20px;
+  font-size: 1.25em;
   height: 100%;
-  line-height: 40px;
+  line-height: 2.4em;
   margin: 0px;
   overflow: hidden;
   text-align: center;
@@ -48,130 +66,17 @@ h2 {
   vertical-align: middle;
 }
 
-.titlebar .back {
-  display: block;
-  height: 100%;
-  left: 0px;
-  line-height: 40px;
-  margin-left: 5px;
-  position: absolute;
-  text-shadow: rgba(0, 0, 0, 0.3) 0px -1px 0;
-  top: 0px;
-  vertical-align: middle;
-  width: auto;
-}
-
-.titlebar button {
-  display: block;
-  background: none;
-  right: 0px;
-  line-height: 40px;
-  margin-right: 5px;
-  position: absolute;
-  text-shadow: rgba(0, 0, 0, 0.3) 0px -1px 0;
-  top: 0px;
-  vertical-align: middle;
-  width: auto;
-}
-
-.info {
-  background-color: #F0F0F0;
-  font-size: 12px;
-  font-weight: bold;
-  line-height: 16px;
-  margin: 0px;
-  padding: 10px;
-  text-align: center;
-  text-shadow: #CAEDA6 0 1px 0;
-}
-
-ul {
-  background-color: #F8F8F8;
-  border: 1px solid grey;
-  margin: 10px;
-  padding: 0px;
-  display: block;
-}
-
-ul li {
-  border-bottom: 1px solid grey;
-  display: block;
-/*  line-height: 40px;
-  min-height: 40px;*/
-  padding: 10px 10px;
-  vertical-align: center;
-}
-
-ul.edgetoedge {
-  border-width: 1px 0px;
-  margin: 0px;
-}
-
-ul.rounded {
-  -webkit-border-radius: 5px;
-}
-
-
-ul.rounded {
-  display: table;
-  margin: 3%;
-  width: 94%;
-}
-
-ul.rounded>li {
-  display: table-row;
-}
-
-ul.rounded>li>* {
-  display: table-cell;
-  height: 100%;
-  padding: 10px;
-  border-bottom: 1px solid gray;
-}
-
-ul.rounded>li>form>button {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-ul.rounded>li:last-child>* {
-  border: none;
-}
-
-a {
-  text-decoration: none;
-  color: black;
-}
 /*
-a.location {
-  display: inline-block;
-  position: relative;
-  right: 0px;
-  text-align: right;
-  width: 80%;
-}*/
-
-fieldset{
-  border: none;
-  margin: 0px;
-  padding: 0px;
-}
-
+ * Unstyle form fields
+ */
 button, input[type="text"], input[type="password"] {
   border: none;
   background: none;
   color: black;
   display: block;
   font: inherit;
-  margin: 0px;
-  padding: 0px;
-  width: 100%;
-/*  height: 100%;*/
-}
-
-input[type="text"], input[type="password"] {
-  text-align: right;
+  margin: 0em;
+  padding: 0em;
 }
 
 select {
@@ -179,6 +84,96 @@ select {
   background: none;
   font: inherit;
   display: inline-block;
+}
+
+/*
+ * General Screen Content
+ */
+.screen > h2 {
+  margin: 0.6em 0.3em 0.3em 0.3em;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-shadow: rgba(255, 255, 255, 0.2) 0 1px 1px;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+p {
+  margin: 0em;
+  padding: 0em;
+}
+
+.screen > p {
+  margin: 0.6em;
+}
+
+.info {
+  background-color: #F0F0F0;
+  font-size: 0.8em;
+  font-weight: bold;
+  line-height: 1.25em;
+  margin: 0em;
+  padding: 0.6em;
+  text-align: center;
+  text-shadow: #CAEDA6 0 1px 0;
+}
+
+/*
+ * Lists
+ * -----
+ * All lists render as tables.  Each list item is a table row and each child
+ * thereof is a table cell.  Avoid giving the cells any left or right margin,
+ * as the border above and below the rows is not on the rows, but the cells.
+ */
+ul {
+  background-color: #F8F8F8;
+  border: 1px solid grey;
+  display: table;
+  margin: 10px;
+  padding: 0px;
+}
+
+ul > li {
+  display: table-row;
+}
+
+ul > li > * {
+  border-bottom: 1px solid grey;
+  display: table-cell;
+  padding: 0.6em;
+  vertical-align: middle;
+}
+
+ul > li:last-child > * {
+  border: none;
+}
+
+/* These lists extend from one side of the screen to the other. */
+ul.edgetoedge {
+  border-width: 1px 0px;
+  margin: 0px;
+  width: 100%;
+}
+
+/* These lists have rounded edges. */
+ul.rounded {
+  -webkit-border-radius: 5px;
+  margin: 3%;
+  width: 94%;
+}
+
+input[type="text"], input[type="password"] {
+  text-align: right;
+  width: 100%;
+}
+
+fieldset {
+  border: none;
+  margin: 0px;
+  padding: 0px;
 }
 
 select.month, select.hour {
