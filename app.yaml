@@ -1,5 +1,5 @@
 application: phillycarshare-mobile-kwawatu
-version: 2010-12-demo
+version: dev
 runtime: python
 api_version: 1
 
@@ -14,6 +14,9 @@ handlers:
 
 - url: /scripts
   static_dir: scripts
+
+- url: /static
+  static_dir: static
 
 - url: /images
   static_dir: images
@@ -75,6 +78,10 @@ handlers:
   secure: never
 
 - url: /reservation_info
+  script: pcsmobile/handle/wsgi/router.py
+  secure: never
+
+- url: /about
   script: pcsmobile/handle/wsgi/router.py
   secure: never
 

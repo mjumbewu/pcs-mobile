@@ -1,6 +1,7 @@
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 
+from pcsmobile.handle.wsgi.about import AboutHandler
 from pcsmobile.handle.wsgi.cancel_reservation import CancelReservationHandler
 from pcsmobile.handle.wsgi.choose_datetime import ChooseDateTimeHandler
 from pcsmobile.handle.wsgi.choose_location import ChooseLocationHandler
@@ -33,7 +34,9 @@ application = webapp.WSGIApplication(
          ('/confirm_modification', ConfirmModificationHandler),
          
          ('/my_reservations', MyReservationsHandler),
-         ('/reservation_info', ReservationInfoHandler)],
+         ('/reservation_info', ReservationInfoHandler),
+         
+         ('/about', AboutHandler)],
         debug=True)
 
 def main():

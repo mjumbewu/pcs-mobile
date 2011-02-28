@@ -29,26 +29,34 @@
       <ul class="rounded reservations">
       {% for reservation in reservation_list.reservations %}
         <li class="reservation-record">
-          <span>{{ reservation.vehicle.model.name }} at {{ reservation.vehicle.pod.name }}</span>
-          <span class="reservation-field reservation-memo">{{ reservation.memo }}</span>
-          <span class="reservation-field reservation-start">{{ reservation.start_time|time }}, {{ reservation.start_time|date }}</span>
-          <span class="reservation-field reservation-end">{{ reservation.end_time|time }}, {{ reservation.end_time|date }}</span>
-          <span class="reservation-field reservation-price">${{ reservation.price.total_amount }}</span>
-          
-          {% ifequal reservation.status 0 %}
+          <div>
+            <span>{{ reservation.vehicle.model.name }} at {{ reservation.vehicle.pod.name }}</span>
+            <span class="reservation-field reservation-memo">{{ reservation.memo }}</span>
+            <span class="reservation-field reservation-start">{{ reservation.start_time|time }}, {{ reservation.start_time|date }}</span>
+            <span class="reservation-field reservation-end">{{ reservation.end_time|time }}, {{ reservation.end_time|date }}</span>
+            <span class="reservation-field reservation-price">${{ reservation.price.total_amount }}</span>
+          </div>
+        </li>
+        
+        {% ifequal reservation.status 0 %}
+          <li>
             <form method="GET" action="modify_reservation">
               <input type="hidden" name="status" value="{{ reservation.status }}" />
               <input type="hidden" name="reservation" value="{{ reservation.liveid }}" />
               <button type="submit">Edit</button>
             </form>
-          {% endifequal %}
+          </li>
+        {% endifequal %}
           
-          {% ifequal reservation.status 1 %}
+        {% ifequal reservation.status 1 %}
+          <li>
             <form method="GET" action="modify_reservation">
               <input type="hidden" name="status" value="{{ reservation.status }}" />
               <input type="hidden" name="reservation" value="{{ reservation.liveid }}" />
               <button type="submit">Edit</button>
             </form>
+          </li>
+          <li>
             <form method="GET" action="cancel_reservation">
               <input type="hidden" name="start_time" value="{{ reservation.start_time|date:"Y-m-d\TH:i" }}" />
               <input type="hidden" name="end_time" value="{{ reservation.end_time|date:"Y-m-d\TH:i" }}" />
@@ -60,8 +68,8 @@
               <input type="hidden" name="return_url" value="{{ reflect_url }}" />
               <button type="submit">Cancel</button>
             </form>
-          {% endifequal %}
-        </li>
+          </li>
+        {% endifequal %}
       {% endfor %}
       </ul>
     </section>

@@ -1,0 +1,32 @@
+{% extends "error_catcher.html" %}
+
+{% block title %}About PCS Anywhere{% endblock %}
+{% block content %}
+    <section id="info-screen" class="screen">
+      <div class="titlebar">
+        <a class="back" href="{{ return_url }}">Back</a>
+        <h1>About</h1>
+      </div>
+      
+      <p>
+        PCS Anywhere gives you mobile access to your PhillyCarShare
+        reservations. Make, modify, and cancel reservations without having to go
+        through the automated telephone reservation system. In the near future,
+        you will be able to quickly submit gas receipts and find key to the city
+        deals, all on the go.
+      </p>
+      
+      <!--p>
+        We are currently running a closed beta of PCS Anywhere. Fill out the
+        following form in order to sign up for the beta.
+      </p-->
+      
+      <p>
+        Use your PhillyCarShare user id and password to log in. This allows you
+        and you alone access to your PhillyCarShare data; we never store your
+        password or any of your reservation information on our servers without
+        your <em>explicit</em> permission.
+      </p>
+    </section>
+{% endblock %}
+
