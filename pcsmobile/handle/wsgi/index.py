@@ -10,6 +10,7 @@ class IndexHandler (_BaseHandler):
     
     def _get_rendered_response(self):
         values = {}
+        values['reflect_url'] = self._construct_reflect_path()
         content = self.__render('index.html', values)
         headers = {}
         
